@@ -63,14 +63,14 @@ void ChangeUser_dir(shell_shell *dsh)
 	d = dsh->args[1];
 	if (chdir(d) == -1)
 	{
-		G_ERROR(dsh, 2);
+		G_err(dsh, 2);
 		return;
 	}
 
-	cp_pwd = Stardom(pwd);
+	cp_pwd = dup_str(pwd);
 	set_envV("OLDPWD", cp_pwd, dsh);
 
-	cp_dir = Stardom(d);
+	cp_dir = dup_str(d);
 	set_envV("PWD", cp_dir, dsh);
 
 	free(cp_pwd);
@@ -81,24 +81,24 @@ void ChangeUser_dir(shell_shell *dsh)
 	chdir(d);
 }
 /**
- * changeDir_prev - changes to the previous directory
- * @dsh: data relevant (environ)
+ * changeprev_dir - changeprev_dir function changes to the previous directory
+ * @dsh: data
  * Return: no return
  */
-void changeDir_prev(ichigos_shell *dsh)
+void changeprev_dir(shell_shell *dsh)
 {
 	char pwd[PATH_MAX];
 	char *p_pwd, *p_oldpwd, *cp_pwd, *cp_oldpwd;
 
 	getcwd(pwd, sizeof(pwd));
-	cp_pwd = Stardom(pwd);
+	cp_pwd = dup_str(pwd);
 
 	p_oldpwd = obtainenv("OLDPWD", dsh->env_variable);
 
 	if (p_oldpwd == NULL)
 		cp_oldpwd = cp_pwd;
 	else
-		cp_oldpwd = Stardom(p_oldpwd);
+		cp_oldpwd = dup_str(p_oldpwd);
 
 	set_envV("OLDPWD", cp_pwd, dsh);
 
@@ -109,7 +109,7 @@ void changeDir_prev(ichigos_shell *dsh)
 
 	p_pwd = obtainenv("PWD", dsh->env_variable);
 
-	write(STDOUT_FILENO, p_pwd, Length_ofString(p_pwd));
+	write(STDOUT_FILENO, p_pwd, string_length(p_pwd));
 	write(STDOUT_FILENO, "\n", 1);
 
 	free(cp_pwd);
@@ -122,17 +122,18 @@ void changeDir_prev(ichigos_shell *dsh)
 }
 
 /**
- * changeDir_ - changes to home directory
- * @dsh: data relevant (environ)
+ * change_dir - change_dir function changes current directory
+ * to home to home directory
+ * @dsh: data
  * Return: no return
  */
-void changeDir_(ichigos_shell *dsh)
+void change_dir(shell_shell *dsh)
 {
 	char *p_pwd, *home;
 	char pwd[PATH_MAX];
 
 	getcwd(pwd, sizeof(pwd));
-	p_pwd = Stardom(pwd);
+	p_pwd = dup_str(pwd);
 
 	home = obtainenv("HOME", dsh->env_variable);
 
@@ -145,7 +146,7 @@ void changeDir_(ichigos_shell *dsh)
 
 	if (chdir(home) == -1)
 	{
-		G_ERROR(dsh, 2);
+		G_err(dsh, 2);
 		free(p_pwd);
 		return;
 	}

@@ -56,10 +56,10 @@ typedef struct builtin_s
     int (*f)(shells_shell *dsh);
 } builtin_t;
 
-char *bigups(ichigos_shell *dsh, char *message, char *o, char *d_s);
-char *error_cd_msg(ichigos_shell *dsh);
-char *generic_msg(ichigos_shell *dsh);
-char *exit_get(ichigos_shell *dsh);
+char *big_ups(shell_shell *dsh, char *message, char *o, char *d_s);
+char *errorMessage_cd(shell_shell *dsh);
+char *generic_messages(shell_shell *dsh);
+char *exit_get(shell_shell *dsh);
 
 char *dup_str(const char *s);
 int string_length(const char *s);
@@ -69,17 +69,17 @@ int check_if_int(const char *s);
 
 void ReverseString(char *s);
 
-void Change_Dir(ichigos_shell *dsh);
+void Change_Directory(shell_shell *dsh);
 void ChangeUser_dir(shell_shell *dsh);
-void changeDir_prev(ichigos_shell *dsh);
-void changeDir_(ichigos_shell *dsh);
+void changeprev_dir(shell_shell *dsh);
+void change_dir(shell_shell *dsh);
 
-int Change_Directory(shell_shell *dsh);
+int Change_Dir(shell_shell *dsh);
 
-int count_repchar(char *input, int u);
-int syntax_err(char *input, int u, char last);
-int index_char(char *input, int *u);
-void error_message(ichigos_shell *dsh, char *input, int u, int bool);
+int countChar_rep(char *input, int u);
+int syntax_error(char *input, int u, char last);
+int char_index(char *input, int *u);
+void err_message(shell_shell *dsh, char *input, int u, int bool);
 int case_intfunc(ichigos_shell *dsh, char *input);
 
 int builtIn_com(shell_shell *dsh);
@@ -125,7 +125,7 @@ void free_list(dap **top);
 dame *Add_Variable(dame **head, int lvar, char *val, int lval);
 void Free_var(dame **head);
 
-void copy_s(void *newptr, const void *ptr, unsigned int size);
+void copy_info(void *newptr, const void *ptr, unsigned int size);
 void *prrealloc(void *ptr, unsigned int old_size, unsigned int new_size);
 char **prmalloc(char **ptr, unsigned int old_size, unsigned int new_size);
 
