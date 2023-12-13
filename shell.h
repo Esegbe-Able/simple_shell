@@ -65,9 +65,9 @@ char *dup_str(const char *s);
 int string_length(const char *s);
 int compChar_str(char string[], const char *delim);
 char *split_str(char string[], const char *delim);
-int check_if_int(const char *s);
+int check_ifInt(const char *s);
 
-void ReverseString(char *s);
+void Rev_string(char *s);
 
 void Change_Directory(shell_shell *dsh);
 void ChangeUser_dir(shell_shell *dsh);
@@ -86,7 +86,7 @@ int builtIn_com(shell_shell *dsh);
 
 int exit_shell(shell_shell *dsh);
 
-int (*builtINFunctions(char *cmd))(ichigos_shell *);
+int (*builtINFunctions(char *cmd))(shell_shell *);
 
 int G_err(shell_shell *dsh, int eva);
 
@@ -102,8 +102,8 @@ char *del_com(char *in);
 void loop_shell(shell_shell *dsh);
 
 char *non_printed_char_swap(char *input, int bool);
-void addSeparators_and_cdLists(def **hs, dap **hl, char *input);
-void nextInLine(def **l_s, dap **l_l, ichigos_shell *dsh);
+void addSeparators_&_cdLists(def **hs, dap **hl, char *input);
+void next_In_Line(def **l_s, dap **l_l, shell_shell *dsh);
 int split(ichigos_shell *dsh, char *input);
 char **splityy(char *input);
 
@@ -149,9 +149,9 @@ void set_env_var(char *name, char *value, shell_shell *dsh);
 int comp_envVar_names(shell_shell *dsh);
 int del_env_var(shell_shell *dsh);
 
-int compare_envnames(const char *nenv, const char *name);
-char *obtainenv(const char *name, char **env_variable);
-int print_env(ichigos_shell *dsh);
+int comp_env_names(const char *nenv, const char *name);
+char *obtain_env_var(const char *name, char **env_variable);
+int print_env_var(shell_shell *dsh);
 
 int dir_check(char *path, int *m);
 char *locate_com(char *cmd, char **env_variable);
