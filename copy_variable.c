@@ -18,17 +18,17 @@ void copy_info(void *newptr, const void *ptr, unsigned int size)
 		char_newptr[s] = char_ptr[s];
 }
 /**
- * prrealloc - reallocates the memory block.
- * @ptr: pointer to the memory allocated previously
- * @old_size: size, in bytes, of the allocated space of ptr.
- * @new_size: new size, in bytes, of the new memory block.
+ * *realloc_mem - This function is meant to  reallocate the memory block.
+ * @ptr: pointer to the memory that has been previously realocated
+ * @old_size: size of previously realocated
+ * @new_size: new size of the new memory block(in bytes).
  * Return: ptr.
  * if new_size == old_size, returns ptr without changes.
  * if malloc fails, returns NULL.
  */
-void *prrealloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *realloc_mem(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	void *newptr;
+	void *new_ptr;
 
 	if (ptr == NULL)
 		return (malloc(new_size));
@@ -42,108 +42,109 @@ void *prrealloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	if (new_size == old_size)
 		return (ptr);
 
-	newptr = malloc(new_size);
-	if (newptr == NULL)
+	new_ptr = malloc(new_size);
+	if (new_ptr == NULL)
 		return (NULL);
 
 	if (new_size < old_size)
-		copy_s(newptr, ptr, new_size);
+		copy_s(new_ptr, ptr, new_size);
 	else
-		copy_s(newptr, ptr, old_size);
+		copy_s(new_ptr, ptr, old_size);
 
 	free(ptr);
-	return (newptr);
+	return (new_ptr);
 }
 
 
 
 
 /**
- * del_COMMENT - deletes comments from the input
- * @in: input string
+ * del_com - The del_com function deletes comments from the input
+ * @in: input (In string)
  * Return: input without comments
  */
-char *del_COMMENT(char *in)
+char *del_com(char *in)
 {
-	int u, u_to;
+	int v, v_to;
 
-	u_to = 0;
-	for (u = 0; in[u]; u++)
+	v_to = 0;
+	for (v = 0; in[v]; v++)
 	{
-		if (in[u] == '#')
+		if (in[v] == '#')
 		{
-			if (u == 0)
+			if (v == 0)
 			{
 				free(in);
 				return (NULL);
 			}
 
-			if (in[u - 1] == ' ' || in[u - 1] == '\t' || in[u - 1] == ';')
-				u_to = u;
+			if (in[v - 1] == ' ' || in[v - 1] == '\t' || in[v - 1] == ';')
+				v_to = v;
 		}
 	}
 
-	if (u_to != 0)
+	if (v_to != 0)
 	{
-		in = prrealloc(in, u, u_to + 1);
-		in[u_to] = '\0';
+		in = prrealloc(in, v, v_to + 1);
+		in[v_to] = '\0';
 	}
 
 	return (in);
 }
 
 /**
- * shell_loop - Loop of shell
- * @dsh: data relevant (av, input, args)
+ * loop_shell - loop shell function loops the shell
+ * @dsh: data (av, input, args)
  * Return: no return.
  */
-void shell_loop(ichigos_shell *dsh)
+void loop_shell(shell_shell *dsh)
 {
-int loop, iff;
-char *input;
+	int looop, aff;
+	char *input;
 
-for (loop = 1; loop == 1;)
-{
-write(STDIN_FILENO, "^-^ ", 4);
-input = READLINE(&iff);
-if (iff != -1)
-{
-input = del_COMMENT(input);
-if (input == NULL)
-continue;
+	for (looop = 1; looop == 1;)
+	{
+		write(STDIN_FILENO, "^-^ ", 4);
+		input = READLINE(&iff);
+		if (aff != -1)
+		{
+			input = del_com(input);
+			if (input == NULL)
+				continue;
 
-if (case_intfunc(dsh, input) == 1)
-{
-dsh->status = 2;
-free(input);
-continue;
-}
-input = replace_variable(input, dsh);
-loop = split(dsh, input);
-dsh->counter += 1;
-free(input);
-}
-else
-{
-loop = 0;
-free(input);
-}
-}
+			if (case_intfunc(dsh, input) == 1)
+			{
+				dsh->status = 2;
+				free(input);
+				continue;
+			}
+			input = replace_variable(input, dsh);
+			looop = split(dsh, input);
+			dsh->counter += 1;
+			free(input);
+		}
+		else
+		{
+			looop = 0;
+			free(input);
+		}
+	}
 }
 
 /**
- * prmalloc - reallocates a memory block of a double pointer.
- * @ptr: double pointer to the memory allocated previously.
- * @old_size: size, in bytes, of the allocated space of ptr.
+ * ptr_malloc -  **ptr_malloc pointer function reallocates a
+ * memory block of a double pointer.
+ * @ptr: double pointer to the previously allocated memory.
+ * @old_size: size of the  allocated space of ptr.
  * @new_size: new size, in bytes, of the new memory block.
  * Return: ptr.
  * if new_size == old_size, returns ptr without changes.
  * if malloc fails, returns NULL.
  */
-char **prmalloc(char **ptr, unsigned int old_size, unsigned int new_size)
+char **ptr_malloc(char **ptr, unsigned int old_size, unsigned int new_size)
 {
 	char **newptr;
-	unsigned int r;
+	unsigned int s;
 
 	if (ptr == NULL)
 		return (malloc(sizeof(char *) * new_size));
@@ -155,8 +156,8 @@ char **prmalloc(char **ptr, unsigned int old_size, unsigned int new_size)
 	if (newptr == NULL)
 		return (NULL);
 
-	for (r = 0; r < old_size; r++)
-		newptr[r] = ptr[r];
+	for (s = 0; s < old_size; s++)
+		newptr[s] = ptr[s];
 
 	free(ptr);
 
