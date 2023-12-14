@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 /**
  * PGLA - PGLA function copies info to create
  * a fresh env or alias
@@ -16,9 +16,9 @@ char *PGLA(char *name, char *value)
 	length = length_name + Length_of_val + 2;
 	fresh = malloc(sizeof(char) * (length));
 	dup_string(fresh, name);
-	concate(fresh, "=");
-	concate(fresh, value);
-	concate(fresh, "\0");
+	concate_nate(fresh, "=");
+	concate_nate(fresh, value);
+	concate_nate(fresh, "\0");
 
 	return (fresh);
 }
@@ -29,7 +29,7 @@ char *PGLA(char *name, char *value)
  * @dsh: data structure
  * Return: no return
  */
-void set_env_var(char *name, char *value, shell_shell *dsh)
+void set_env_var(char *name, char *value, shells_shell *dsh)
 {
 	int v;
 	char *var_env, *name_env;
@@ -37,8 +37,8 @@ void set_env_var(char *name, char *value, shell_shell *dsh)
 	for (v = 0; dsh->env_variable[v]; v++)
 	{
 		var_env = dup_str(dsh->env_variable[v]);
-		name_env = split_string(var_env, "=");
-		if (concomp(name_env, name) == 0)
+		name_env = split_str(var_env, "=");
+		if (comp_are(name_env, name) == 0)
 		{
 			free(dsh->env_variable[v]);
 			dsh->env_variable[v] = PGLA(name_env, value);
@@ -60,7 +60,7 @@ void set_env_var(char *name, char *value, shell_shell *dsh)
  * @dsh: data relevant
  * Return: 1 on success.
  */
-int comp_envVar_names(shell_shell *dsh)
+int comp_envVar_names(shells_shell *dsh)
 {
 
 	if (dsh->args[1] == NULL || dsh->args[2] == NULL)
@@ -79,7 +79,7 @@ int comp_envVar_names(shell_shell *dsh)
  * @dsh: data relevant
  * Return: 1 on success.
  */
-int del_env_var(shell_shell *dsh)
+int del_env_var(shells_shell *dsh)
 {
 	char **reallocenv_variable;
 	char *var_env, *name_env;
@@ -94,8 +94,8 @@ int del_env_var(shell_shell *dsh)
 	for (i = 0; dsh->env_variable[i]; i++)
 	{
 		var_env = dup_str(dsh->env_variable[i]);
-		name_env = split_string(var_env, "=");
-		if (concomp(name_env, dsh->args[1]) == 0)
+		name_env = split_str(var_env, "=");
+		if (comp_are(name_env, dsh->args[1]) == 0)
 		{
 			k = i;
 		}

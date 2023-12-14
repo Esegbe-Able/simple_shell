@@ -1,10 +1,10 @@
-#include "shell.h"
+#include "shells.h"
 /**
  * free_data - f_data function frees data structure
  * @dsh: data structure
  * Return: no return
  **********************************/
-void free_data(shell_shell *dsh)
+void free_data(shells_shell *dsh)
 {
 unsigned int v = 0;
 while (dsh->env_variable[v])
@@ -23,7 +23,7 @@ free(dsh->process_id);
  * @ichi: arg vector
  * Return: no return
  **********************************/
-void set_data(shell_shell *dsh, char **ichi)
+void set_data(shells_shell *dsh, char **ichi)
 {
 	unsigned int v = 0;
 
@@ -44,7 +44,7 @@ void set_data(shell_shell *dsh, char **ichi)
 	}
 
 	dsh->env_variable[v] = NULL;
-	dsh->process_id = int_toString(getpid());
+	dsh->process_id = int_to_string(getpid());
 }
 
 
@@ -57,7 +57,7 @@ void set_data(shell_shell *dsh, char **ichi)
  */
 int main(int ac, char **ichi)
 {
-	shell_shell dsh;
+	shells_shell dsh;
 	(void) ac;
 
 	signal(SIGINT, sing_line);

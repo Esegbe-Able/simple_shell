@@ -19,41 +19,42 @@
 
 extern char **environ;
 
+/*struct data - struecure*/
 typedef struct data
 {
-    char **ichi;
-    char *input;
-    char **args;
-    int status;
-    int counter;
-    char **env_variable;
-    char *process_id;
+	char **ichi;
+	char *input;
+	char **args;
+	int status;
+	int counter;
+	char **env_variable;
+	char *process_id;
 } shells_shell;
 
 typedef struct def_s
 {
-    char separator;
-    struct def_s *next;
+	char separator;
+	struct def_s *next;
 } def;
 
 typedef struct dap_s
 {
-    char *line;
-    struct dap_s *next;
+	char *line;
+	struct dap_s *next;
 } dap;
 
 typedef struct dame_list
 {
-    int Length_of_variable;
-    char *val;
-    int Length_of_value;
-    struct dame_list *next;
+	int Length_of_variable;
+	char *val;
+	int Length_of_value;
+	struct dame_list *next;
 } dame;
 
 typedef struct builtin_s
 {
-    char *name;
-    int (*f)(shells_shell *dsh);
+	char *name;
+	int (*f)(shells_shell *dsh);
 } builtin_t;
 
 char *big_ups(shells_shell *dsh, char *message, char *o, char *d_s);
@@ -118,9 +119,9 @@ void a_help_option(void);
 void builtIn_help(void);
 
 def *add_node(def **top, char sep);
-void fee_list(def **top);
+void freee_list(def **top);
 dap *end_node(dap **top, char *line);
-void free_list(dap **top);
+void freelist(dap **top);
 
 dame *Add_Variable(dame **head, int lvar, char *val, int lval);
 void Free_var(dame **head);

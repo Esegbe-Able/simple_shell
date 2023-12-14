@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 /**
  * ass_line - ass_line function is meant to assign the
  * line var for get_line
@@ -29,7 +29,7 @@ void ass_line(char **lptr, size_t *i, char *buffer, size_t k)
 	}
 	else
 	{
-		concpy(*lptr, buffer);
+		dup_string(*lptr, buffer);
 		free(buffer);
 	}
 }
@@ -38,7 +38,7 @@ void ass_line(char **lptr, size_t *i, char *buffer, size_t k)
  * @dsh: data relevant
  * Return: 1 on success
  */
-int Change_Dir(shell_shell *dsh)
+int Change_Dir(shells_shell *dsh)
 {
 	char *d;
 	int id, i3, ig;
@@ -47,30 +47,30 @@ int Change_Dir(shell_shell *dsh)
 
 	if (d != NULL)
 	{
-		id = concomp("$HOME", d);
-		i3 = concomp("~", d);
-		ig = concomp("--", d);
+		id = comp_are("$HOME", d);
+		i3 = comp_are("~", d);
+		ig = comp_are("--", d);
 	}
 
 	if (d == NULL || !id || !i3 || !ig)
 	{
-		changeDir_(dsh);
+		change_dir(dsh);
 		return (1);
 	}
 
-	if (concomp("-", d) == 0)
+	if (comp_are("-", d) == 0)
 	{
-		changeDir_prev(dsh);
+		changeprev_dir(dsh);
 		return (1);
 	}
 
-	if (concomp(".", d) == 0 || concomp("..", d) == 0)
+	if (comp_are(".", d) == 0 || comp_are("..", d) == 0)
 	{
-		Change_Dir(dsh);
+		change_dir(dsh);
 		return (1);
 	}
 
-	Change_Dir(dsh);
+	change_dir(dsh);
 
 	return (1);
 }
@@ -114,7 +114,7 @@ ssize_t read_input(char **lptr, size_t *i, FILE *stream)
 			break;
 		}
 		if (input >= BUFSIZE)
-			buffer = prrealloc(buffer, input, input + 1);
+			buffer = realloc_mem(buffer, input, input + 1);
 		buffer[input] = u;
 		input++;
 	}
@@ -133,7 +133,7 @@ ssize_t read_input(char **lptr, size_t *i, FILE *stream)
  * @dsh: data
  * Return: 0 on success.
  */
-int exit_shell(shell_shell *dsh)
+int exit_shell(shells_shell *dsh)
 {
 	unsigned int i;
 	int jiggy;
@@ -142,13 +142,13 @@ int exit_shell(shell_shell *dsh)
 
 	if (dsh->args[1] != NULL)
 	{
-		i = string_toInt(dsh->args[1]);
-		jiggy = check_if_int(dsh->args[1]);
-		sterling = Length_ofString(dsh->args[1]);
+		i = stringto_int(dsh->args[1]);
+		jiggy = check_ifInt(dsh->args[1]);
+		sterling = string_length(dsh->args[1]);
 		big_num = i > (unsigned int)INT_MAX;
 		if (!jiggy || sterling > 10 || big_num)
 		{
-			G_ERROR(dsh, 2);
+			G_err(dsh, 2);
 			dsh->status = 2;
 			return (1);
 		}

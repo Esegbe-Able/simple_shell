@@ -1,11 +1,11 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * print_env_var - this function prints the evironment variables
  * @dsh: data relevant.
  * Return: 1 on success.
  */
-int print_env_var(shell_shell *dsh)
+int print_env_var(shells_shell *dsh)
 {
 	int h, i;
 
@@ -61,7 +61,7 @@ char *obtain_env_var(const char *name, char **env_variable)
 
 	for (m = 0; env_variable[m]; m++)
 	{
-		nov = compare_envnames(env_variable[m], name);
+		nov = comp_env_names(env_variable[m], name);
 		if (nov)
 		{
 			ptr_env = env_variable[m];
@@ -89,7 +89,7 @@ int check_ifInt(const char *s)
 			return (0);
 		v++;
 	}
-	hreturn (1);
+	return (1);
 }
 
 /**
@@ -110,7 +110,7 @@ void Rev_string(char *s)
 	b = 0;
 	while (b < count - 1)
 	{
-		a = b + 1;
+		b = c + 1;
 		while (c > 0)
 		{
 			y = *(string + c);

@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * copy_info - copy_s function copies information betwixt void pointers.
@@ -14,7 +14,7 @@ void copy_info(void *newptr, const void *ptr, unsigned int size)
 	char *char_newptr = (char *)newptr;
 	unsigned int s;
 
-	for (s = 0; r < size; s++)
+	for (s = 0; s < size; s++)
 		char_newptr[s] = char_ptr[s];
 }
 /**
@@ -47,9 +47,9 @@ void *realloc_mem(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (NULL);
 
 	if (new_size < old_size)
-		copy_s(new_ptr, ptr, new_size);
+		copy_info(new_ptr, ptr, new_size);
 	else
-		copy_s(new_ptr, ptr, old_size);
+		copy_info(new_ptr, ptr, old_size);
 
 	free(ptr);
 	return (new_ptr);
@@ -85,7 +85,7 @@ char *del_com(char *in)
 
 	if (v_to != 0)
 	{
-		in = prrealloc(in, v, v_to + 1);
+		in = realloc_mem(in, v, v_to + 1);
 		in[v_to] = '\0';
 	}
 
@@ -97,7 +97,7 @@ char *del_com(char *in)
  * @dsh: data (av, input, args)
  * Return: no return.
  */
-void loop_shell(shell_shell *dsh)
+void loop_shell(shells_shell *dsh)
 {
 	int looop, aff;
 	char *input;
@@ -105,20 +105,20 @@ void loop_shell(shell_shell *dsh)
 	for (looop = 1; looop == 1;)
 	{
 		write(STDIN_FILENO, "^-^ ", 4);
-		input = READLINE(&iff);
+		input = READLINE(&aff);
 		if (aff != -1)
 		{
 			input = del_com(input);
 			if (input == NULL)
 				continue;
 
-			if (case_intfunc(dsh, input) == 1)
+			if (caseint_function(dsh, input) == 1)
 			{
 				dsh->status = 2;
 				free(input);
 				continue;
 			}
-			input = replace_variable(input, dsh);
+			input = replace_var(input, dsh);
 			looop = split(dsh, input);
 			dsh->counter += 1;
 			free(input);

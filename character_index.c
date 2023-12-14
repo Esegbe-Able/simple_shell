@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * countChar_rep - countChar_rep function counts the
@@ -94,39 +94,39 @@ int char_index(char *input, int *u)
  * @input: input string
  * Return: 0 to exit, 1 to continue
  */
-int split_lines(shell_shell *dsh, char *input)
+int split_lines(shells_shell *dsh, char *input)
 {
 
 	def *x, *l_s;
 	dap *y, *l_l;
 	int myloop;
 
-	i = NULL;
-	w = NULL;
+	x = NULL;
+	y = NULL;
 
-	addSeparators_and_cdLists(&i, &w, input);
+	addSeparators_cdLists(&x, &y, input);
 
-	l_s = i;
-	l_l = w;
+	l_s = x;
+	l_l = y;
 
 	while (l_l != NULL)
 	{
 		dsh->input = l_l->line;
 		dsh->args = splityy(dsh->input);
-		myloop = kano(dsh);
+		myloop = builtIn_com(dsh);
 		free(dsh->args);
 
 		if (myloop == 0)
 			break;
 
-		nextInLine(&l_s, &l_l, dsh);
+		next_In_Line(&l_s, &l_l, dsh);
 
 		if (l_l != NULL)
 			l_l = l_l->next;
 	}
 
-	fee_list(&i);
-	free_list(&w);
+	freee_list(&x);
+	freelist(&y);
 
 	if (myloop == 0)
 		return (0);
@@ -140,7 +140,7 @@ int split_lines(shell_shell *dsh, char *input)
  * @bool: to control mg error
  * Return: no return
  */
-void err_message(shell_shell *dsh, char *input, int u, int bool)
+void err_message(shells_shell *dsh, char *input, int u, int bool)
 {
 	char *mg, *mg2, *mg3, *e, *counter;
 	int leth;
@@ -161,7 +161,7 @@ void err_message(shell_shell *dsh, char *input, int u, int bool)
 
 	mg2 = ": Syntax error: \"";
 	mg3 = "\" unexpected\n";
-	counter = int_toString(dsh->counter);
+	counter = int_to_string(dsh->counter);
 	leth = string_length(dsh->ichi[0]) + string_length(counter);
 	leth += string_length(mg) + string_length(mg2) + string_length(mg3) + 2;
 
@@ -172,14 +172,14 @@ void err_message(shell_shell *dsh, char *input, int u, int bool)
 		return;
 	}
 	dup_string(e, dsh->ichi[0]);
-	concate(e, ": ");
-	concate(e, counter);
-	concate(e, mg2);
-	concate(e, mg);
-	concate(e, mg3);
-	concate(e, "\0");
+	concate_nate(e, ": ");
+	concate_nate(e, counter);
+	concate_nate(e, mg2);
+	concate_nate(e, mg);
+	concate_nate(e, mg3);
+	concate_nate(e, "\0");
 
-	write(STDERR_FILENO, e, lth);
+	write(STDERR_FILENO, e, leth);
 	free(e);
 	free(counter);
 }

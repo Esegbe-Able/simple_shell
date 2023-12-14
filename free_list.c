@@ -1,11 +1,11 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * free_list - free_list function frees up the a def
  * @top: top of linked list.
  * Return: no return.
  */
-void free_list(def **top)
+void freee_list(def **top)
 {
 	def *x;
 	def *def;
