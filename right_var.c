@@ -52,7 +52,7 @@ char *non_printed_char_swap(char *input, int bool)
  * @input: input(in string)
  * Return: no return
  */
-void addSeparators_&_cdLists(def **hs, dap **hl, char *input)
+void addSeparators_cdLists(def **hs, dap **hl, char *input)
 {
 	int v;
 	char *line;

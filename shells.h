@@ -1,5 +1,5 @@
-#ifndef _shell_h_
-#define _shell_h_
+#ifndef _shells_h_
+#define _shells_h_
 
 #include <stdio.h>
 #include <unistd.h>
@@ -28,7 +28,7 @@ typedef struct data
     int counter;
     char **env_variable;
     char *process_id;
-} ichigos_shell;
+} shells_shell;
 
 typedef struct def_s
 {
@@ -56,10 +56,10 @@ typedef struct builtin_s
     int (*f)(shells_shell *dsh);
 } builtin_t;
 
-char *big_ups(shell_shell *dsh, char *message, char *o, char *d_s);
-char *errorMessage_cd(shell_shell *dsh);
-char *generic_messages(shell_shell *dsh);
-char *exit_get(shell_shell *dsh);
+char *big_ups(shells_shell *dsh, char *message, char *o, char *d_s);
+char *errorMessage_cd(shells_shell *dsh);
+char *generic_messages(shells_shell *dsh);
+char *exit_get(shells_shell *dsh);
 
 char *dup_str(const char *s);
 int string_length(const char *s);
@@ -69,28 +69,28 @@ int check_ifInt(const char *s);
 
 void Rev_string(char *s);
 
-void Change_Directory(shell_shell *dsh);
-void ChangeUser_dir(shell_shell *dsh);
-void changeprev_dir(shell_shell *dsh);
-void change_dir(shell_shell *dsh);
+void Change_Directory(shells_shell *dsh);
+void ChangeUser_dir(shells_shell *dsh);
+void changeprev_dir(shells_shell *dsh);
+void change_dir(shells_shell *dsh);
 
-int Change_Dir(shell_shell *dsh);
+int Change_Dir(shells_shell *dsh);
 
 int countChar_rep(char *input, int u);
 int syntax_error(char *input, int u, char last);
 int char_index(char *input, int *u);
-void err_message(shell_shell *dsh, char *input, int u, int bool);
-int case_intfunc(ichigos_shell *dsh, char *input);
+void err_message(shells_shell *dsh, char *input, int u, int bool);
+int caseint_function(shells_shell *dsh, char *input);
 
-int builtIn_com(shell_shell *dsh);
+int builtIn_com(shells_shell *dsh);
 
-int exit_shell(shell_shell *dsh);
+int exit_shell(shells_shell *dsh);
 
-int (*builtINFunctions(char *cmd))(shell_shell *);
+int (*builtINFunctions(char *cmd))(shells_shell *);
 
-int G_err(shell_shell *dsh, int eva);
+int G_err(shells_shell *dsh, int eva);
 
-int HELP(shell_shell *dsh);
+int HELP(shells_shell *dsh);
 
 void ass_line(char **lptr, size_t *i, char *buffer, size_t k);
 ssize_t read_input(char **lptr, size_t *i, FILE *stream);
@@ -99,12 +99,12 @@ void ctrl_prompt(int sig);
 char *readInp_str(int *dub);
 
 char *del_com(char *in);
-void loop_shell(shell_shell *dsh);
+void loop_shell(shells_shell *dsh);
 
 char *non_printed_char_swap(char *input, int bool);
-void addSeparators_&_cdLists(def **hs, dap **hl, char *input);
-void next_In_Line(def **l_s, dap **l_l, shell_shell *dsh);
-int split(ichigos_shell *dsh, char *input);
+void addSeparators_cdLists(def **hs, dap **hl, char *input);
+void next_In_Line(def **l_s, dap **l_l, shells_shell *dsh);
+int split(shells_shell *dsh, char *input);
 char **splityy(char *input);
 
 void h_env_info_env(void);
@@ -129,9 +129,9 @@ void copy_info(void *newptr, const void *ptr, unsigned int size);
 void *realloc_mem(void *ptr, unsigned int old_size, unsigned int new_size);
 char **ptr_malloc(char **ptr, unsigned int old_size, unsigned int new_size);
 
-int getInt_length(int n);
-char *int_toString(int n);
-int string_toInt(char *s);
+int getlength_Int(int n);
+char *int_to_string(int n);
+int stringto_int(char *s);
 
 char *concate_nate(char *dest, const char *src);
 char *dup_string(char *dest, char *src);
@@ -145,24 +145,24 @@ char *rep_string(dame **head, char *input, char *new_input, int nlen);
 char *replace_var(char *input, shells_shell *dsh);
 
 char *PGLA(char *name, char *value);
-void set_env_var(char *name, char *value, shell_shell *dsh);
-int comp_envVar_names(shell_shell *dsh);
-int del_env_var(shell_shell *dsh);
+void set_env_var(char *name, char *value, shells_shell *dsh);
+int comp_envVar_names(shells_shell *dsh);
+int del_env_var(shells_shell *dsh);
 
 int comp_env_names(const char *nenv, const char *name);
 char *obtain_env_var(const char *name, char **env_variable);
-int print_env_var(shell_shell *dsh);
+int print_env_var(shells_shell *dsh);
 
 int dir_check(char *path, int *m);
 char *locate_com(char *cmd, char **env_variable);
-int execute_check(shell_shell *dsh);
-int user_perm(char *d, shell_shell *dsh);
-int exec_cmd(ichigos_shell *dsh);
+int execute_check(shells_shell *dsh);
+int user_perm(char *d, shells_shell *dsh);
+int exec_cmd(shells_shell *dsh);
 
-char *error_information(shell_shell *dsh);
-char *path_err_info(shell_shll *dsh);
+char *error_information(shells_shell *dsh);
+char *path_err_info(shells_shell *dsh);
 
-void free_data(shell_shell *dsh);
-void set_data(shell_shell *dsh, char **ichi);
+void free_data(shells_shell *dsh);
+void set_data(shells_shell *dsh, char **ichi);
 
 #endif

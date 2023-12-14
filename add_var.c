@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * *Add_Variable - Add_Variable function adds up a variable
@@ -68,13 +68,13 @@ void Free_var(dame **head)
  */
 
 
-char *path_err_info(shell_shell *dsh)
+char *path_err_info(shells_shell *dsh)
 {
 	int lat;
 	char *d_s;
 	char *o;
 
-	d_s = int_toString(dsh->counter);
+	d_s = int_to_string(dsh->counter);
 	lat = string_length(dsh->ichi[0]) + string_length(d_s);
 	lat += string_length(dsh->args[0]) + 24;
 	o = malloc(sizeof(char) * (lat + 1));
@@ -84,13 +84,13 @@ char *path_err_info(shell_shell *dsh)
 		free(d_s);
 		return (NULL);
 	}
-	concpy(o, dsh->ichi[0]);
-	concat(o, ": ");
-	concat(o, d_s);
-	concat(o, ": ");
-	concat(o, dsh->args[0]);
-	concat(o, ": insufficient permission\n");
-	concat(o, "\0");
+	dup_string(o, dsh->ichi[0]);
+	concate_nate(o, ": ");
+	concate_nate(o, d_s);
+	concate_nate(o, ": ");
+	concate_nate(o, dsh->args[0]);
+	concate_nate(o, ": insufficient permission\n");
+	concate_nate(o, "\0");
 	free(d_s);
 	return (o);
 }
@@ -101,14 +101,14 @@ char *path_err_info(shell_shell *dsh)
  * Return: error string.
  */
 
-char *error_information(shell_shell *dsh)
+char *error_information(shells_shell *dsh)
 {
 	int lat;
 	char *o;
 	char *d_s;
 	char *message;
 
-	d_s = int_toString(dsh->counter);
+	d_s = int_to_string(dsh->counter);
 	message = ": Cannot add or Remove environment\n";
 	lat = string_length(dsh->ichi[0]) + string_length(d_s);
 	lat += string_length(dsh->args[0]) + string_length(message) + 4;
@@ -120,13 +120,13 @@ char *error_information(shell_shell *dsh)
 		return (NULL);
 	}
 
-	concpy(o, dsh->ichi[0]);
-	concat(o, ": ");
-	concat(o, d_s);
-	concat(o, ": ");
-	concat(o, dsh->args[0]);
-	concat(o, message);
-	concat(o, "\0");
+	dup_string(o, dsh->ichi[0]);
+	concate_nate(o, ": ");
+	concate_nate(o, d_s);
+	concate_nate(o, ": ");
+	concate_nate(o, dsh->args[0]);
+	concate_nate(o, message);
+	concate_nate(o, "\0");
 	free(d_s);
 
 	return (o);
