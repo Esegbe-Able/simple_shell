@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * big_ups - big_ups function concatenates the message for cd error
@@ -8,31 +8,32 @@
  * @d_s: counter lines
  * Return: error message
  */
-char *big_ups(shell_shell *dsh, char *message, char *o, char *d_s)
+char *big_ups(shells_shell *dsh, char *message, char *o, char *d_s)
 {
 	char *awful_flag;
+
 	dup_string(o, dsh->ichi[0]);
-	concate(o, ": ");
-	concate(o, d_s);
-	concate(o, ": ");
-	concate(o, dsh->args[0]);
-	concate(o, message);
+	concate_nate(o, ": ");
+	concate_nate(o, d_s);
+	concate_nate(o, ": ");
+	concate_nate(o, dsh->args[0]);
+	concate_nate(o, message);
 	if (dsh->args[1][0] == '-')
 	{
 		awful_flag = malloc(3);
 		awful_flag[0] = '-';
 		awful_flag[1] = dsh->args[1][1];
 		awful_flag[2] = '\0';
-		concate(o, awful_flag);
+		concate_nate(o, awful_flag);
 		free(awful_flag);
 	}
 	else
 	{
-		concate(o, dsh->args[1]);
+		concate_nate(o, dsh->args[1]);
 	}
-	
-	concate(o, "\n");
-	concate(o, "\0");
+
+	concate_nate(o, "\n");
+	concate_nate(o, "\0");
 	return (o);
 }
 
@@ -43,12 +44,12 @@ char *big_ups(shell_shell *dsh, char *message, char *o, char *d_s)
  * Return: Error message
  *
  */
-char *errorMessage_cd(shell_shell *dsh)
+char *errorMessage_cd(shells_shell *dsh)
 {
 	int lat, lat_id;
 	char *o, *d_s, *message;
-	
-	d_s = int_toString(dsh->counter);
+
+	d_s = int_to_string(dsh->counter);
 	if (dsh->args[1][0] == '-')
 	{
 		message = ": Bad option ";
@@ -67,11 +68,11 @@ char *errorMessage_cd(shell_shell *dsh)
 		free(d_s);
 		return (NULL);
 	}
-	
+
 	o = big_ups(dsh, message, o, d_s);
-	
+
 	free(d_s);
-	
+
 	return (o);
 }
 
@@ -82,12 +83,13 @@ char *errorMessage_cd(shell_shell *dsh)
  * @dsh: data
  * Return: Error message
  */
-char *generic_messages(shell_shell *dsh)
+char *generic_messages(shells_shell *dsh)
 {
 	int lat;
 	char *o;
 	char *d_s;
-	d_s = int_toString(dsh->counter);
+
+	d_s = int_to_string(dsh->counter);
 	lat = string_length(dsh->ichi[0]) + string_length(d_s);
 	lat += string_length(dsh->args[0]) + 16;
 	o = malloc(sizeof(char) * (lat + 1));
@@ -98,12 +100,12 @@ char *generic_messages(shell_shell *dsh)
 		return (NULL);
 	}
 	dup_string(o, dsh->ichi[0]);
-	concate(o, ": ");
-	concate(o, d_s);
-	concate(o, ": ");
-	concate(o, dsh->args[0]);
-	concate(o, ": not found\n");
-	concate(o, "\0");
+	concate_nate(o, ": ");
+	concate_nate(o, d_s);
+	concate_nate(o, ": ");
+	concate_nate(o, dsh->args[0]);
+	concate_nate(o, ": not found\n");
+	concate_nate(o, "\0");
 	free(d_s);
 	return (o);
 }
@@ -113,13 +115,13 @@ char *generic_messages(shell_shell *dsh)
  * @dsh: data
  * Return: Error message
  */
-char *exit_get(shell_shell *dsh)
+char *exit_get(shells_shell *dsh)
 {
 	int lat;
 	char *o;
 	char *d_s;
-	
-	d_s = int_toString(dsh->counter);
+
+	d_s = int_to_string(dsh->counter);
 	lat = string_length(dsh->ichi[0]) + string_length(d_s);
 	lat += string_length(dsh->args[0]) + string_length(dsh->args[1]) + 23;
 	o = malloc(sizeof(char) * (lat + 1));
@@ -129,13 +131,14 @@ char *exit_get(shell_shell *dsh)
 		return (NULL);
 	}
 	dup_string(o, dsh->ichi[0]);
-	concate(o, ": ");
-	concate(o, d_s);
-	concate(o, ": ");
-	concate(o, dsh->args[0]);
-	concate(o, ": Bad number: ");
-	concate(o, dsh->args[1]);concate(o, "\n\0");
+	concate_nate(o, ": ");
+	concate_nate(o, d_s);
+	concate_nate(o, ": ");
+	concate_nate(o, dsh->args[0]);
+	concate_nate(o, ": Bad number: ");
+	concate_nate(o, dsh->args[1]);
+	concate_nate(o, "\n\0");
 	free(d_s);
-	
+
 	return (o);
 }

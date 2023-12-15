@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 /**
  * dir_check - dir_check function checks ":" if is in
  * the current directory.
@@ -33,10 +33,10 @@ char *locate_com(char *cmd, char **env_variable)
 	int length_dir, length_cmd, v;
 	struct stat st;
 
-	path = obtainenv("PATH", env_variable);
+	path = obtain_env_var("PATH", env_variable);
 	if (path)
 	{
-		ptr_path = Stardom(path);
+		ptr_path = dup_str(path);
 		length_cmd = string_length(cmd);
 		token_path = split_str(ptr_path, ":");
 		v = 0;
@@ -47,10 +47,10 @@ char *locate_com(char *cmd, char **env_variable)
 					return (cmd);
 			length_dir = string_length(token_path);
 			d = malloc(length_dir + length_cmd + 2);
-			concpy(d, token_path);
-			concat(d, "/");
-			concat(d, cmd);
-			concat(d, "\0");
+			dup_string(d, token_path);
+			concate_nate(d, "/");
+			concate_nate(d, cmd);
+			concate_nate(d, "\0");
 			if (stat(d, &st) == 0)
 			{
 				free(ptr_path);
@@ -74,7 +74,7 @@ char *locate_com(char *cmd, char **env_variable)
  * @dsh: data structure
  * Return: 0 if is not an executable, other number if it does
  */
-int execute_check(shell_shell *dsh)
+int execute_check(shells_shell *dsh)
 {
 	struct stat st;
 	int v;
@@ -119,7 +119,7 @@ int execute_check(shell_shell *dsh)
  * @dsh: data structure
  * Return: 1 if there is an error, 0 if not
  */
-int user_perm(char *d, shell_shell *dsh)
+int user_perm(char *d, shells_shell *dsh)
 {
 	if (d == NULL)
 	{
@@ -127,7 +127,7 @@ int user_perm(char *d, shell_shell *dsh)
 		return (1);
 	}
 
-	if (concomp(dsh->args[0], d) != 0)
+	if (comp_are(dsh->args[0], d) != 0)
 	{
 		if (access(d, X_OK) == -1)
 		{
@@ -154,7 +154,7 @@ int user_perm(char *d, shell_shell *dsh)
  * @dsh: relevant data
  * Return: 1 on success.
  */
-int execute_cmd(shell_shell *dsh)
+int execute_cmd(shells_shell *dsh)
 {
 	pid_t pd;
 	pid_t wpd;
@@ -190,8 +190,8 @@ int execute_cmd(shell_shell *dsh)
 	else
 	{
 		do {
-			wpd = waitpid(pd, &state, WUNTRACED);
-		} while (!WIFEXITED(state) && !WIFSIGNALED(state));
+			wpd = waitpid(pd, &stat, WUNTRACED);
+		} while (!WIFEXITED(stat) && !WIFSIGNALED(stat));
 	}
 
 	dsh->status = stat / 256;

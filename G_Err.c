@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 /**
  * G_err - this function calls the error according
  * the builtin, syntax or permission
@@ -6,32 +6,32 @@
  * @eva: error value
  * Return: error
  */
-int G_err(shell_shell *dsh, int eva)
+int G_err(shells_shell *dsh, int eva)
 {
 	char *e;
 
 	switch (eva)
 	{
 	case -1:
-		e = error_info(dsh);
+		e = error_information(dsh);
 		break;
 	case 126:
-		e = path_error_info(dsh);
+		e = path_err_info(dsh);
 		break;
 	case 127:
-		e = generic_msg(dsh);
+		e = generic_messages(dsh);
 		break;
 	case 2:
-		if (concomp("exit", dsh->args[0]) == 0)
+		if (comp_are("exit", dsh->args[0]) == 0)
 			e = exit_get(dsh);
-		else if (concomp("cd", dsh->args[0]) == 0)
-			e = error_cd_msg(dsh);
+		else if (comp_are("cd", dsh->args[0]) == 0)
+			e = errorMessage_cd(dsh);
 		break;
 	}
 
 	if (e)
 	{
-		write(STDERR_FILENO, e, Length_ofString(e));
+		write(STDERR_FILENO, e, string_length(e));
 		free(e);
 	}
 
@@ -70,9 +70,9 @@ char *readInp_str(int *dub)
  * @dsh: data relevant (args)
  * Return: 1 on success.
  */
-int builtIn_com(shell_shell *dsh)
+int builtIn_com(shells_shell *dsh)
 {
-	int (*builtin)(ichigos_shell *dsh);
+	int (*builtin)(shells_shell *dsh);
 
 	if (dsh->args[0] == NULL)
 		return (1);

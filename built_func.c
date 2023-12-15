@@ -1,11 +1,11 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * builtINFunctions - builtin that passes the command in the arg
  * @cmd: command
  * Return: function pointer of the builtin command
  */
-int (*builtINFunctions(char *cmd))(shell_shell *)
+int (*builtINFunctions(char *cmd))(shells_shell *)
 {
 	builtin_t builtIN[] = {
 		{ "env", print_env_var },
@@ -20,7 +20,7 @@ int (*builtINFunctions(char *cmd))(shell_shell *)
 
 	for (v = 0; builtIN[v].name; v++)
 	{
-		while (concomp(builtIN[v].name, cmd) == 0)
+		while (comp_are(builtIN[v].name, cmd) == 0)
 			break;
 	}
 
@@ -77,8 +77,8 @@ int getlength_Int(int n)
 
 	if (n < 0)
 	{
-		y++;
-		z = n * -1;
+		z++;
+		y = n * -1;
 	}
 	else
 	{
@@ -138,7 +138,7 @@ char *int_to_string(int n)
  * @input: input (string)
  * Return: 1 if there is an error. 0 in other case
  */
-int caseint_function(shell_shell *dsh, char *input)
+int caseint_function(shells_shell *dsh, char *input)
 {
 	int c = 0;
 	int f_char = 0;
