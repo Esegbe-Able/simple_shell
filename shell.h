@@ -161,26 +161,26 @@ void *_realloc(void *, unsigned int, unsigned int);
 int bfree(void **);
 
 /* toem_atoi.c */
-int interactive(info_t *);
-int is_delim(char, char *);
-int _isalpha(int);
-int _atoi(char *);
+int interact_iveness(info_t *);
+int check_delim(char, char *);
+int check_isalpha(int);
+int _btio(char *);
 
 /* toem_errors1.c */
-int _erratoi(char *);
-void print_error(info_t *, char *);
-int print_d(int, int);
-char *convert_number(long int, int, int);
-void remove_comments(char *);
+int str_toInt(char *);
+void print_err_msg(info_t *, char *);
+int print_decimal(int, int);
+char *converter_function(long int, int, int);
+void remove_comm(char *);
 
 /* toem_builtin.c */
-int _myexit(info_t *);
-int _mycd(info_t *);
-int _myhelp(info_t *);
+int exit_shell(info_t *);
+int change_mycd(info_t *);
+int get_help(info_t *);
 
 /* toem_builtin1.c */
-int _myhistory(info_t *);
-int _myalias(info_t *);
+int history_list(info_t *);
+int my_alias(info_t *);
 
 /*toem_getline.c */
 ssize_t get_input(info_t *);
