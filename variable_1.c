@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 /**
  * right_variable - right_variable function checks if the
  * typed variable is an env variable
@@ -7,20 +7,20 @@
  * @data: data struct
  * Return: no return
  */
-void right_variable(dame **h, char *in, shell_shell *data)
+void right_variable(dame **h, char *in, shells_shell *data)
 {
 	int rows, chr, l, value;
 	char **_envr;
 
 	_envr = data->env_variable;
-	for (rows = 0; _envr[row]; rows++)
+	for (rows = 0; _envr[rows]; rows++)
 	{
 		for (l = 1, chr = 0; _envr[rows][chr]; chr++)
 		{
 			if (_envr[rows][chr] == '=')
 			{
-				lvalue = Length_ofString(_envr[rows] + chr + 1);
-				AddVariable(h, l, _envr[rows] + chr + 1, lvalue);
+				value = string_length(_envr[rows] + chr + 1);
+				Add_Variable(h, l, _envr[rows] + chr + 1, value);
 				return;
 			}
 
@@ -37,7 +37,7 @@ void right_variable(dame **h, char *in, shell_shell *data)
 			break;
 	}
 
-	AddVariable(h, l, NULL, 0);
+	Add_Variable(h, l, NULL, 0);
 }
 /**
  * plenty_money - function checks if the typed variable is $$ or $?
@@ -47,33 +47,33 @@ void right_variable(dame **h, char *in, shell_shell *data)
  * @data: data struct
  * Return: no return
  */
-int plenty_money(dame **h, char *in, char *st, shell_shell *data)
+int plenty_money(dame **h, char *in, char *st, shells_shell *data)
 {
 	int i, first, lpd;
 
-	first = Length_ofString(st);
-	lpd = Length_ofString(data->process_id);
+	first = string_length(st);
+	lpd = string_length(data->process_id);
 
 	for (i = 0; in[i]; i++)
 	{
 		if (in[i] == '$')
 		{
 			if (in[i + 1] == '?')
-				AddVariable(h, 2, st, first), i++;
-			else if (in[x + 1] == '$')
-				AddVariable(h, 2, data->process_id, lpd), i++;
-			else if (in[x + 1] == '\n')
-				AddVariable(h, 0, NULL, 0);
+				Add_Variable(h, 2, st, first), i++;
+			else if (in[i + 1] == '$')
+				Add_Variable(h, 2, data->process_id, lpd), i++;
+			else if (in[i + 1] == '\n')
+				Add_Variable(h, 0, NULL, 0);
 			else if (in[i + 1] == '\0')
-				AddVariable(h, 0, NULL, 0);
+				Add_Variable(h, 0, NULL, 0);
 			else if (in[i + 1] == ' ')
-				AddVariable(h, 0, NULL, 0);
+				Add_Variable(h, 0, NULL, 0);
 			else if (in[i + 1] == '\t')
-				AddVariable(h, 0, NULL, 0);
+				Add_Variable(h, 0, NULL, 0);
 			else if (in[i + 1] == ';')
-				AddVariable(h, 0, NULL, 0);
+				Add_Variable(h, 0, NULL, 0);
 			else
-				right_var(h, in + i, data);
+				right_variable(h, in + i, data);
 		}
 	}
 
@@ -101,7 +101,7 @@ char *rep_string(dame **head, char *input, char *new_input, int nlen)
 		{
 			if (!(indx->Length_of_variable) && !(indx->Length_of_value))
 			{
-				new_input[x] = input[j];
+				new_input[i] = input[j];
 				j++;
 			}
 			else if (indx->Length_of_variable && !(indx->Length_of_value))
@@ -114,7 +114,7 @@ char *rep_string(dame **head, char *input, char *new_input, int nlen)
 			{
 				for (y = 0; y < indx->Length_of_value; y++)
 				{
-					new_input[i] = indx->val[z];
+					new_input[i] = indx->val[y];
 					i++;
 				}
 				j += (indx->Length_of_variable);
@@ -138,13 +138,13 @@ char *rep_string(dame **head, char *input, char *new_input, int nlen)
  * @dsh: data struct
  * Return: replaced string
  */
-char *replace_var(char *input, shell_shell *dsh)
+char *replace_var(char *input, shells_shell *dsh)
 {
 	dame *head, *indx;
 	char *status, *new_input;
 	int oldlen, newlen;
 
-	status = int_toString(dsh->status);
+	status = int_to_string(dsh->status);
 	head = NULL;
 
 	oldlen = plenty_money(&head, input, status, dsh);
@@ -169,11 +169,11 @@ char *replace_var(char *input, shell_shell *dsh)
 	new_input = malloc(sizeof(char) * (newlen + 1));
 	new_input[newlen] = '\0';
 
-	new_input = rep_string(&head, input, new_input, nlen);
+	new_input = rep_string(&head, input, new_input, newlen);
 
 	free(input);
 	free(status);
-	FreeVariable(&head);
+	Add_Variable(&head);
 
 	return (new_input);
 }

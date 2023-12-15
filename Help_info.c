@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * builtIn_help - builtIn_help Help info for builtin help.
@@ -49,24 +49,24 @@ void a_help_option(void)
  * @dsh: data structure (args and input)
  * Return: Return 0
 */
-int HELP(shell_shell *dsh)
+int HELP(shells_shell *dsh)
 {
 
 	if (dsh->args[1] == 0)
-		gen_h();
-	else if (concomp(dsh->args[1], "setenv") == 0)
+		help_();
+	else if (comp_are(dsh->args[1], "setenv") == 0)
 		h_env_setup();
-	else if (concomp(dsh->args[1], "env") == 0)
+	else if (comp_are(dsh->args[1], "env") == 0)
 		h_env_info_env();
-	else if (concomp(dsh->args[1], "unsetenv") == 0)
+	else if (comp_are(dsh->args[1], "unsetenv") == 0)
 		h_env_unsetenv();
-	else if (concomp(dsh->args[1], "help") == 0)
+	else if (comp_are(dsh->args[1], "help") == 0)
 		help_option();
-	else if (concomp(dsh->args[1], "exit") == 0)
+	else if (comp_are(dsh->args[1], "exit") == 0)
 		exit_builtin();
-	else if (concomp(dsh->args[1], "cd") == 0)
+	else if (comp_are(dsh->args[1], "cd") == 0)
 		builtIn_help();
-	else if (concomp(dsh->args[1], "alias") == 0)
+	else if (comp_are(dsh->args[1], "alias") == 0)
 		a_help_option();
 	else
 		write(STDERR_FILENO, dsh->args[0],

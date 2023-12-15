@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * non_printed_char_swap - swaps | and & for non-printed chars
@@ -71,11 +71,11 @@ void addSeparators_cdLists(def **hs, dap **hl, char *input)
 		}
 	}
 
-	line = split_string(input, ";|&");
+	line = split_str(input, ";|&");
 	do {
 		line = non_printed_char_swap(line, 1);
 		end_node(hl, line);
-		line = split_string(NULL, ";|&");
+		line = split_str(NULL, ";|&");
 	} while (line != NULL);
 
 }
@@ -89,7 +89,7 @@ void addSeparators_cdLists(def **hs, dap **hl, char *input)
  * @dsh: data structure
  * Return: no return
  */
-void next_In_Line(def **l_s, dap **l_l, shell_shell *dsh)
+void next_In_Line(def **l_s, dap **l_l, shells_shell *dsh)
 {
 	int loop_s;
 	def *ls_s;
@@ -103,7 +103,7 @@ void next_In_Line(def **l_s, dap **l_l, shell_shell *dsh)
 	{
 		if (dsh->status == 0)
 		{
-			if (ls_s->separator== '&' || ls_s->separator == ';')
+			if (ls_s->separator == '&' || ls_s->separator == ';')
 				loop_s = 0;
 			if (ls_s->separator == '|')
 				ls_l = ls_l->next, ls_s = ls_s->next;
@@ -137,29 +137,30 @@ char **splityy(char *input)
 	char *token;
 
 	as = TOK_BUFSIZE;
-	tokens = malloc(sizeof(char *) * (bs));
+	tokens = malloc(sizeof(char *) * (as));
 	if (tokens == NULL)
 	{
 		write(STDERR_FILENO, ": allocation error\n", 18);
 		exit(EXIT_FAILURE);
 	}
 
-	token = split_string(input, TOK_DELIM);
+	token = split_str(input, TOK_DELIM);
 	tokens[0] = token;
 
 	for (v = 1; token != NULL; v++)
 	{
-		if (v == bs)
+		if (v == as)
 		{
 			as += TOK_BUFSIZE;
-			tokens = prmalloc(tokens, v, sizeof(char *) * as);
+			tokens = ptr_malloc(tokens, v, sizeof(char *) * as);
+
 			if (tokens == NULL)
 			{
 				write(STDERR_FILENO, ": allocation error\n", 18);
 				exit(EXIT_FAILURE);
 			}
 		}
-		token = split_string(NULL, TOK_DELIM);
+		token = split_str(NULL, TOK_DELIM);
 		tokens[v] = token;
 	}
 

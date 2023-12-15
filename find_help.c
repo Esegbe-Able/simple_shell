@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "shells.h"
 
 /**
  * help_ - Help is the entry point for help info for help builtin
@@ -7,7 +7,7 @@
 void help_(void)
 {
 	char *help = "$ bash, version 1.0(1)-release\n";
-	
+
 	write(STDOUT_FILENO, help, string_length(help));
 	help = "These commands are defined internally.Type 'help' to see the list";
 	write(STDOUT_FILENO, help, string_length(help));
@@ -31,6 +31,7 @@ void help_(void)
 void h_env_setup(void)
 {
 	char *help = "setenv: setenv (const char *name, const char *value,";
+
 	write(STDOUT_FILENO, help, string_length(help));
 	help = "int replace)\n\t";
 	write(STDOUT_FILENO, help, string_length(help));
