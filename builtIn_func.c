@@ -1,4 +1,4 @@
-#include "shells.h"
+#include "shell.h"
 
 /**
  * exit_shell - This function's work is to exit the shell
@@ -12,16 +12,16 @@ int exit_shell(info_t *info)
 
 	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exit_check = _erratoi(info->argv[1]);
+		exit_check = str_toInt(info->argv[1]);
 		if (exit_check == -1)
 		{
 			info->status = 2;
-			print_error(info, "Illegal number: ");
-			_eputs(info->argv[1]);
-			_eputchar('\n');
+			print_err_msg(info, "Illegal number: ");
+			print_InpStr(info->argv[1]);
+			write_char('\n');
 			return (1);
 		}
-		info->err_num = _erratoi(info->argv[1]);
+		info->err_num = str_toInt(info->argv[1]);
 		return (-2);
 	}
 	info->err_num = -1;
@@ -40,39 +40,39 @@ int change_mycd(info_t *info)
 
 	s = getcwd(buffer, 1024);
 	if (!s)
-		_puts("TODO: >>getcwd failure emsg here<<\n");
+		_inputs("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
-		dir = _getenv(info, "HOME=");
+		dir = getenv_val(info, "HOME=");
 		if (!dir)
 			changedir_ret = /* TODO: what should this be? */
-				chdir((dir = _getenv(info, "PWD=")) ? dir : "/");
+				chdir((dir = getenv_val(info, "PWD=")) ? dir : "/");
 		else
 			changedir_ret = chdir(dir);
 	}
 	else if (_strcmp(info->argv[1], "-") == 0)
 	{
-		if (!_getenv(info, "OLDPWD="))
+		if (!getenv_val(info, "OLDPWD="))
 		{
-			_puts(s);
+			_inputs(s);
 			_putchar('\n');
 			return (1);
 		}
-		_puts(_getenv(info, "OLDPWD=")), _putchar('\n');
+		_inputs(getenv_val(info, "OLDPWD=")), _putchar('\n');
 		changedir_ret = /* TODO: what should this be? */
-			chdir((dir = _getenv(info, "OLDPWD=")) ? dir : "/");
+			chdir((dir = getenv_val(info, "OLDPWD=")) ? dir : "/");
 	}
 	else
 		changedir_ret = chdir(info->argv[1]);
-	if (chdir_ret == -1)
+	if (changedir_ret == -1)
 	{
-		print_error(info, "can't cd to ");
-		_eputs(info->argv[1]), _eputchar('\n');
+		print_err_msg(info, "can't cd to ");
+		print_InpStr(info->argv[1]), write_char('\n');
 	}
 	else
 	{
-		_setenv(info, "OLDPWD", _getenv(info, "PWD="));
-		_setenv(info, "PWD", getcwd(buffer, 1024));
+		_set_env_Var(info, "OLDPWD", getenv_val(info, "PWD="));
+		_set_env_Var(info, "PWD", getcwd(buffer, 1024));
 	}
 	return (0);
 }
@@ -87,8 +87,8 @@ int get_help(info_t *info)
 	char **arg_array;
 
 	arg_array = info->argv;
-	_puts("help call works. Function not yet implemented \n");
+	_inputs("help call works. Function not yet implemented \n");
 	if (0)
-		_puts(*arg_array); /* temp att_unused workaround */
+		_inputs(*arg_array); /* temp att_unused workaround */
 	return (0);
 }
