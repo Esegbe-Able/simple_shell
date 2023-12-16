@@ -14,7 +14,7 @@ void print_InpStr(char *str)
 		return;
 	while (str[j] != '\0')
 	{
-		_eputchar(str[j]);
+		write_char(str[j]);
 		j++;
 	}
 }
@@ -78,7 +78,7 @@ int print_inpStr(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		j += _putfd(*str++, fd);
+		j += put_fda(*str++, fd);
 	}
 	return (j);
 }
